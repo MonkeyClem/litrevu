@@ -1,0 +1,28 @@
+<div class="review_snippet">
+
+    <div class="review_header">
+        <h3>Critque</h3>
+        {% if review %}
+        IL Y A BIEN UNE REVUEW
+        <small class="review_meta">
+            <p><strong>{{ review.user}}</strong> posted a review</p>
+            le {{ review.time_created }}
+        </small>
+        <p>{{ review.headline }} - {{ review.rating }}</p>
+        <p> {{ review.body }}  </p>
+
+        <div>     En réponse à :    {% include "partials/_ticket_snippet.html" with ticket=review.ticket %}
+        </div>
+
+
+            {% if request.user == review.user %}
+            <button>
+                Modifier cette critique
+            </button>
+            <button>
+                Supprimer cette critique
+            </button>
+            {% endif %}
+        {% endif %}
+    </div>  
+</div>

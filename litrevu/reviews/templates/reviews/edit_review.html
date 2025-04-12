@@ -1,0 +1,22 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'reviews/review.css' %}">
+
+
+{% block content %}
+  <h2 class="review_title">{{ title }}</h2>
+
+  {% if ticket %}
+  <p>Vous êtes en train de modifier votre critique en réponse à : </p>
+  <div> 
+    <p><strong>{{ ticket.title }}</strong></p>
+    <p>Description : {{ ticket.description }}</p>
+    <img src="{{ ticket.image.url }}" alt="Image du billet" class="ticket-image">
+  </div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{{ submit_label }}</button>
+  </form>
+{% endblock %}

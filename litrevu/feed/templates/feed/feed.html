@@ -1,0 +1,22 @@
+<!DOCTYPE html> 
+
+<head> 
+
+</head>
+
+<body>
+
+    FORM TODO IN VIEW: <button>Demander une critique</button><button>Créer une critique</button>
+    {% for post in posts %}
+    <hr><hr>
+        {% if post.content_type == "TICKET" %}
+        {% include "partials/_ticket_snippet.html" with ticket=post %}
+        <p>— C'est un ticket !</p>
+        {% endif %}
+        {% if post.content_type == "REVIEW" %}
+        {% include "partials/_review_snippet.html" with review=post %}
+        {% endif %}
+  {% endfor %}
+  
+</body>
+</html>

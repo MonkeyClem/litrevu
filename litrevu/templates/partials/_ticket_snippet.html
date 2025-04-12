@@ -1,0 +1,30 @@
+<div class="ticket-card">
+    <div class="ticket-header">
+      <h3 class="ticket-title">{{ ticket.title }}</h3>
+      {% if ticket %}
+      <small class="ticket-meta">
+        par <strong>{{ ticket.user }}</strong>,
+        publié le {{ ticket.time_created|date:"d/m/Y H:i" }}
+      </small>
+      {% endif %}
+    </div>
+  
+    {% if ticket.image %}
+      <div class="ticket-image">
+        <img src="{{ ticket.image.url }}" alt="Image du billet : {{ ticket.title }}">
+      </div>
+    {% endif %}
+  
+    <p class="ticket-description">{{ ticket.description }}</p>
+  
+    <!-- {% if request.user == ticket.user %}
+      <div class="ticket-actions">
+        <a href="{% url 'edit_ticket' ticket.id %}">Modifier le ticket</a> |
+        <a href="{% url 'delete_ticket' ticket.id %}">Supprimer ce ticket</a>
+      </div>
+    {% endif %} -->
+
+
+    
+  </div>
+  

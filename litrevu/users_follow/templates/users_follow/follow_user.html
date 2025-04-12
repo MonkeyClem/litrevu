@@ -1,0 +1,49 @@
+
+{% load static %}
+
+{% block content %}
+  <div class="follow-container">
+    <h2>Gérer mes abonnements</h2>
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <h3>Suivre un utilisateur</h3>
+    <form method="post" class="follow-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Suivre</button>
+    </form>
+
+    <h3>Utilisateurs suivis</h3>
+    <ul class="following-list">
+      {% for follow in following %}
+        <li>
+          {{ follow.followed_user.username }}
+          <form method="post" action="{% url 'unfollow_user' follow.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Se désabonner</button>
+          </form>
+        </li>
+      {% empty %}
+        <li>Tu ne suis encore personne.</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Utilisateurs qui me suivent</h3>
+    <ul class="followed_by-list">
+      {% for follow in followed_by %}
+      <li>
+        {{ follow.user}}
+      </li>
+      {% endfor %}
+      </ul>
+  </div>
+
+
+{% endblock %}

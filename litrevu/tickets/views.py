@@ -1,0 +1,64 @@
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseForbidden
+from .forms import TicketForm
+from .models import Ticket
+from django.contrib.auth.decorators import login_required
+
+# Create your views here.
+@login_required
+def create_or_edit_ticket(request, ticket_id = None) : 
+    if ticket_id : 
+        ticket = get_object_or_404(Ticket, pk=ticket_id)
+        if ticket.user != request.user : 
+            return HttpResponseForbidden("Vous ne pouvez modifier que les tickets dont vous êtes le créateur : ")
+        else : 
+            ticket = ticket 
+            print("Ticket :::::>" , ticket)
+    else : 
+        ticket = None
+
+    if request.method == "POST" : 
+        print("request :::::", request)
+        form = TicketForm(request.POST ,request.FILES, instance=ticket)
+        if form.is_valid() : 
+            ticket = form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
+            #TODO : 
+            # return('STAY ON THE SAME PAGE OR REDIRECT ?')
+    else : 
+        form = TicketForm(instance=ticket)
+
+    context = {
+        'form' : form,
+        'title' : 'Modifier un Billet' if ticket else 'Créer un billet',
+        'submit_label': 'Mettre à jour' if ticket else "Créer",
+    }
+    return render (request, 'tickets/create_ticket.html', context)
+
+
+@login_required
+def delete_ticket(request, ticket_id) : 
+    if ticket_id : 
+        ticket = get_object_or_404(Ticket, pk=ticket_id)
+        if ticket.user != request.user : 
+            return HttpResponseForbidden("Vous ne pouvez supprimer que les tickets dont vous êtes l'auteur")
+        else : 
+            ticket = ticket
+    else : 
+        # TODO:
+        pass
+        #return redirect('./home')
+
+    if request.method == "POST" :
+        ticket.delete()
+        #TODO : Uncomment line below once we have the homepage ready
+        # redirect('/home')
+    
+    context = {
+        'title' : "Supprimer un billet", 
+        'submit_label' : "Supprimer",
+        'ticket' : ticket
+
+    }
+    return render (request, 'tickets/delete_ticket.html', context)

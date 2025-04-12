@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - LITReview</title>
+    <link rel="stylesheet" href="{% static 'authentication/login.css' %}">
+</head>
+
+<body>
+    <header class="login_page_header">
+        <h1>LITReview</h1>
+    </header>
+
+    {% if messages %}
+        <div role="alert" aria-live="assertive">
+            {% for message in messages %}
+                <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main class="container"> 
+
+        <section class="sign_up_now_container">
+            <h2>Inscrivez-vous maintenant</h2>
+            <a href="{% url 'signup' %}">
+                <button type="button" class="login_form_btn">S'inscrire</button>
+            </a>
+        </section>
+
+        <section class="login_form_container"> 
+            <h2>Connectez-vous</h2>
+            <form method="post" class="login_form" novalidate>
+                {% csrf_token %}
+                {{ form.as_p }}  
+
+<!-- 
+                <div class="form_group">
+                    <label class="login_form_label" for="username">Nom d'utilisateur</label>
+                    <input class="login_form_input" id="username" type="text" name="username" required> 
+                </div>
+
+                <div class="form_group">
+                    <label class="login_form_label" for="password">Mot de passe</label>
+                    <input class="login_form_input" id="password" type="password" name="password" required>
+                </div>
+
+                <div class="form_group">
+                    <label class="login_form_label" for="passwordConfirmation">Confirmation du mot de passe</label>
+                    <input class="login_form_input" id="passwordConfirmation" type="password" name="passwordConfirmation" required>
+                </div>
+-->
+                <div class="login_form_btn_container">              
+                    <button class="login_form_btn" type="submit">Se connecter</button>
+                    <button class="login_form_btn" type="reset">Réinitialiser</button> 
+                </div>
+            </form> 
+        </section>
+    </main>
+</body>
+</html>

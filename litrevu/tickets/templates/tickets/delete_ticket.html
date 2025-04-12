@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head> 
+    <title>{{title}}</title>
+</head>
+<h2>{{title}}</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% include "partials/_ticket_snippet.html" with ticket=ticket request=request%}
+
+    <button type="submit">{{submit_label}}</button>
+</form>
+
+ </html>
+

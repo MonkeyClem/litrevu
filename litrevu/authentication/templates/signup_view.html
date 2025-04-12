@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="{% static 'authentication/login.css' %}">
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    
+<header class="login_page_header">
+    <h1>LITReview</h1>
+</header>
+    
+
+<div class="signup_form_container">
+    <form method="post" name="signup_form" class="signup_form">
+            {% csrf_token %}
+            {{ form.as_p }}  <!-- Génère automatiquement les champs du formulaire -->
+            <!-- <label class="signup_form_label">Nom d'utilisateur</label>
+            <input class="signup_form_input" type="text" name="username" required> 
+            <label class="signup_form_label">Password :</label>
+            <input class="signup_form_input" type="password" name="password1" required>
+            <label class="signup_form_label">Password Confirmation : </label>
+            <input class="signup_form_input" type="password" name="password2" required> -->
+            <div class="login_form_btn_container">              
+                <button class="signup_form_btn" type="submit"> S'inscrire</button>
+            </div>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color:blue;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if form.errors %}
+    <div style="color: red;">
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                <p>{{ field }}: {{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+</div>
+
+</body>
+
+</html>

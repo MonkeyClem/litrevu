@@ -1,0 +1,19 @@
+
+{% block content %}
+  <h2>Suppression de la critique</h2>
+
+  <p>Tu es sur le point de supprimer ta critique pour le billet :</p>
+  <div class="ticket-info">
+    <strong>{{ review.ticket.title }}</strong><br>
+    <img src="{{review.ticket.image.url}}">
+    {{ review.ticket.description }}
+  </div>
+
+  <p><strong>Es-tu sûr de vouloir supprimer cette critique ?</strong></p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">✅ Oui, supprimer</button>
+
+  </form>
+{% endblock %}
