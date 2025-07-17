@@ -1,0 +1,9 @@
+<nav aria-label="Navigation principale" style="display: flex; align-items: baseline; justify-content: center; border: 3px solid black;">
+        <h3 style=" position: absolute">LITREVU</h3>     
+        <ul style="display: flex; list-style: none; width: 30%; justify-content: space-evenly; margin-left: auto;">
+            <li><a href="{% url 'feed' %}">Flux</a></li>
+            <li><a href="{% url 'create_ticket' %}">Créer un billet</a></li>
+            <li><a href="{% url 'follow_user' %}">Utilisateurs suivis</a></li>
+            <li><a href="{% url 'user_posts' %}">Posts</a></li>
+        </ul>
+</nav>

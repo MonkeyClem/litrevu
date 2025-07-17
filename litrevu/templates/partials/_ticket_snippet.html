@@ -1,30 +1,31 @@
-<div class="ticket-card">
-    <div class="ticket-header">
+{% block content %}
+<div class="ticket-card {% if inside_review %}ticket-inside-review{% endif %}">
+    <div class="ticket-header" style="background-color: aliceblue;">
+       {% if not inside_review%} 
       <h3 class="ticket-title">{{ ticket.title }}</h3>
+      {% endif %}
       {% if ticket %}
-      <small class="ticket-meta">
-        par <strong>{{ ticket.user }}</strong>,
-        publié le {{ ticket.time_created|date:"d/m/Y H:i" }}
-      </small>
+
+        <p> <strong>{{ ticket.user }}</strong> : {{ticket.title}} {% if not inside_review %} a demandé une critique{% endif %}
+        publié le {{ ticket.time_created|date:"d/m/Y H:i" }}</p>
+
+      {% endif %}
+
+      {% if ticket.description and not inside_review %}
+       description : <p>{{ ticket.description }} </p>
       {% endif %}
     </div>
-  
+
     {% if ticket.image %}
-      <div class="ticket-image">
-        <img src="{{ ticket.image.url }}" alt="Image du billet : {{ ticket.title }}">
-      </div>
-    {% endif %}
-  
-    <p class="ticket-description">{{ ticket.description }}</p>
-  
-    <!-- {% if request.user == ticket.user %}
-      <div class="ticket-actions">
-        <a href="{% url 'edit_ticket' ticket.id %}">Modifier le ticket</a> |
-        <a href="{% url 'delete_ticket' ticket.id %}">Supprimer ce ticket</a>
-      </div>
-    {% endif %} -->
+    <div class="ticket-image" style="width: 30%; max-height: 300px; overflow: hidden;">
+      <img src="{{ ticket.image.url }}" alt="Image du billet : {{ ticket.title }}" 
+           style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
+    </div>
+  {% endif %}
 
+  <!-- {% if ticket.user == request.user %}
+      <a href="{% url 'delete_ticket' ticket.id %}" class="button delete">Supprimer ce billet</a>s
+  {% endif %} -->
 
-    
-  </div>
-  
+    </div>
+  {% endblock %}

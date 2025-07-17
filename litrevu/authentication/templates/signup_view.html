@@ -4,6 +4,7 @@
 <head>
     <link rel="stylesheet" href="{% static 'authentication/login.css' %}">
     <meta charset="UTF-8">
+    <title>Inscription - LITReview</title>
 </head>
 
 <body>
@@ -17,14 +18,9 @@
     <form method="post" name="signup_form" class="signup_form">
             {% csrf_token %}
             {{ form.as_p }}  <!-- Génère automatiquement les champs du formulaire -->
-            <!-- <label class="signup_form_label">Nom d'utilisateur</label>
-            <input class="signup_form_input" type="text" name="username" required> 
-            <label class="signup_form_label">Password :</label>
-            <input class="signup_form_input" type="password" name="password1" required>
-            <label class="signup_form_label">Password Confirmation : </label>
-            <input class="signup_form_input" type="password" name="password2" required> -->
-            <div class="login_form_btn_container">              
-                <button class="signup_form_btn" type="submit"> S'inscrire</button>
+            <div class="login_form_btn_container">    
+                <button onclick="window.history.back(); return false;">Retour</button>
+                <button class="signup_form_btn" type="submit">Inscrivez-vous</button>
             </div>
     </form>
 

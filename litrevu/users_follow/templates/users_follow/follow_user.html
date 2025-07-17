@@ -4,15 +4,7 @@
 {% block content %}
   <div class="follow-container">
     <h2>Gérer mes abonnements</h2>
-
-    {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-          <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-
+    
     <h3>Suivre un utilisateur</h3>
     <form method="post" class="follow-form">
       {% csrf_token %}

@@ -1,22 +1,28 @@
-<!DOCTYPE html> 
+{% extends 'base.html' %}
 
-<head> 
 
-</head>
-
-<body>
-
-    FORM TODO IN VIEW: <button>Demander une critique</button><button>Créer une critique</button>
+{% block content %}
+    <div style="display: flex; height: 50px; width: 100%; justify-content: center;">    
+        <button> <a href="{% url 'create_ticket' %}">Demander une critique</a></button>
+        <span style="width: 30px;"></span>
+        <button><a href="{% url 'create_ticket_and_rewiew' %}" >Créer une critique</a></button>
+    </div>
     {% for post in posts %}
     <hr><hr>
-        {% if post.content_type == "TICKET" %}
-        {% include "partials/_ticket_snippet.html" with ticket=post %}
-        <p>— C'est un ticket !</p>
+    <div style="border: 5px solid black ; padding: 5px;">      
+    {% if post.content_type == "TICKET" %}
+            {% include "partials/_ticket_snippet.html" with ticket=post %}
+        {% if not post.user_has_reviewed %}
+        <!-- <button>Ajouter une critique</button> -->
+        <a href="{% url 'create_review' post.id %}" class="button">Ajouter une critique</a>
         {% endif %}
-        {% if post.content_type == "REVIEW" %}
+    {% endif %}
+    {% if post.content_type == "REVIEW" %}
         {% include "partials/_review_snippet.html" with review=post %}
-        {% endif %}
-  {% endfor %}
+    {% endif %} 
+    </div>
   
-</body>
-</html>
+    {% endfor %}
+  {% endblock %}
+
+

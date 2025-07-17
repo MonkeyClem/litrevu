@@ -1,0 +1,19 @@
+.ticket-form-input{
+    width: 100%;
+
+}
+.ticket-form-textarea{
+    width: 100%;
+}
+
+.ticket-form-file{
+    width: 100%;
+}
+
+.label_class{
+    width: 100%;
+}
+
+.form_group{
+    margin: 10px 0px;
+}

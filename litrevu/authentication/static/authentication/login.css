@@ -1,7 +1,6 @@
 body{
     display: flex;
     flex-direction: column;
-    background-color: red;
     text-align: center;
     margin: 10;
     box-sizing: border-box;
@@ -17,7 +16,7 @@ body{
     display: flex;
     justify-content: center;
     box-sizing: border-box;
-    align-items: center; /* ✅ Centre verticalement le h1 */
+    align-items: center; 
 
 }
 .login_page_header h1{
@@ -27,36 +26,25 @@ body{
 .container{
     display: flex;
     flex-direction: row;
-    background-color: purple;
     width: 100vw;
     box-sizing: border-box;
     height: 80vh;
-
 }
 
-/* .sign_up_now_container{
-    background-color: green;
-    display: flex;
-    width: 50%;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-direction: column
-} */
+
+h2{
+    padding-top: 10%;
+}
+
 .sign_up_now_container,
 .login_form_container{
-    background-color: yellow;
     width: 50%;
     display: flex;
-    flex-grow: 1;
-    flex-shrink: 1;
     flex-direction: column;
-    border : 2px solid black;
-    margin: 15px;
-    box-sizing: border-box;
 }
 
 .login_form{
-    background-color: darkcyan;
+    /* background-color: darkcyan; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -80,8 +68,6 @@ body{
     margin: 10px;
     box-sizing: border-box;
 
-    background-color: green;
-
 }
 .login_form_btn{
     margin: 0px 8px;
@@ -96,9 +82,7 @@ body{
     display: flex;
     flex-direction: column;
     /* flex-grow: 1; */
-    background-color: green;
     min-height: 90vh;
-
 }
 
 .signup_form label, 

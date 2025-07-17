@@ -1,28 +1,33 @@
-<div class="review_snippet">
+<div class="review_snippet" style="border: solid 3px black; padding: 20px">
+  <div style="display: flex;">
+      <p><strong>{{ review.user }}</strong> posted a review  </p>
+      <span style="margin-left: auto;">le {{ review.time_created }}</span>
+  </div>
 
-    <div class="review_header">
-        <h3>Critque</h3>
-        {% if review %}
-        IL Y A BIEN UNE REVUEW
-        <small class="review_meta">
-            <p><strong>{{ review.user}}</strong> posted a review</p>
-            le {{ review.time_created }}
-        </small>
-        <p>{{ review.headline }} - {{ review.rating }}</p>
-        <p> {{ review.body }}  </p>
-
-        <div>     En réponse à :    {% include "partials/_ticket_snippet.html" with ticket=review.ticket %}
-        </div>
-
-
-            {% if request.user == review.user %}
-            <button>
-                Modifier cette critique
-            </button>
-            <button>
-                Supprimer cette critique
-            </button>
-            {% endif %}
+  <div class="review_snippet_header" style="display: flex; align-items: baseline;"> 
+    <p>{{ review.headline }}</p>
+    <span style="width: 20px;"></span>
+    <p class="review-rating" aria-label="Note : {{ review.rating }} sur 5">
+      {% for star in "12345" %}
+        {% if forloop.counter <= review.rating %}
+          &#9733; {# ★ : Black star (plein, noir) #}
+        {% else %}
+          &#9734; {# ☆ : White star (vide) #}
         {% endif %}
-    </div>  
+      {% endfor %}
+    </p>
+  </div>
+
+  <p>{{ review.body }}</p>
+
+  <div style="border: solid 3px black; width: 50%; padding: 5px;">
+    <p> En réponse à : {% include "partials/_ticket_snippet.html" with ticket=review.ticket inside_review=True %}</p>
+  </div>
+
+  {% if request.user == review.user %}
+    <a href="{% url 'edit_review' review.id %}"
+      >✏️ Modifier cette critique</a
+    >
+    <a href="{% url 'delete_review' review.id %}" class="button delete">Supprimer cette critique</a>
+  {% endif %}
 </div>

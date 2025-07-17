@@ -11,3 +11,8 @@ class TicketForm(forms.ModelForm):
             'description': "Description",
             'image': 'Image du billet'
         }
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'ticket-form-input'}),
+            'description': forms.Textarea(attrs={'class': 'ticket-form-textarea'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'ticket-form-file'}),
+        }

@@ -15,5 +15,5 @@ class ReviewForm(forms.ModelForm) :
             "rating" : "Note"
         }
         widgets = {
-            'rating': forms.RadioSelect(choices=[(i, str(i)) for i in range(6)])  # ✅ de 0 à 5
+            'rating': forms.RadioSelect(choices=[(i, str(i)) for i in range(6)])  
         }
