@@ -19,11 +19,11 @@ class SignUpForm(forms.ModelForm) :
     def clean_passwordConfirmation(self) : 
         print("\nOn entre dans le clean_passwordConfirmation\n")
         password = self.cleaned_data.get('password')
-        passwordConfirmation = self.cleaned_data.get('passwordConfirmation')
+        password_confirmation = self.cleaned_data.get('passwordConfirmation')
 
-        if password and passwordConfirmation and password != passwordConfirmation :
+        if password and password_confirmation and password != password_confirmation:
             raise forms.ValidationError("Les mots de passes ne correspondent pas !")
         else: 
             print("Les mots de passe correspondent")
-        
-        return passwordConfirmation
+
+        return password_confirmation

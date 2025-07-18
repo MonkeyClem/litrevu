@@ -40,8 +40,8 @@ def edit_review(request, review_id) :
     if request.method == "POST" : 
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid() : 
-            review = form.save()
-            redirect("www.google.com")
+            form.save()
+            return redirect("feed")
 
     else : 
         form = ReviewForm(instance=review)

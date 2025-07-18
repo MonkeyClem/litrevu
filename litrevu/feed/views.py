@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.db.models import CharField, Value
+from django.db.models import CharField, Value, Q
 from tickets.models import Ticket
 from reviews.models import Review
 from users_follow.models import UserFollows
@@ -22,30 +22,41 @@ Ce tableau est obtenu par une compréhension de liste, que itère sur chaque él
 Ensuite, on déclare 
 """
 
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.db.models import CharField, Value, Q
+from itertools import chain
+from tickets.models import Ticket
+from reviews.models import Review
+from users_follow.models import UserFollows
+
 @login_required
-def feed(request) :  
-    following_users = UserFollows.objects.filter(user = request.user)
-    followed_users = [follow.followed_user for follow in following_users]
-    
-    print("followed_users", followed_users)
-    print(f"On est dans le feed.views. Following users ==> {following_users}")
+def feed(request):
+    user = request.user
 
-    tickets = Ticket.objects.all().annotate(content_type=Value('TICKET', output_field=CharField()))
-    reviews = Review.objects.all().annotate(content_type=Value('REVIEW', output_field=CharField()))
+    followed_users = UserFollows.objects.filter(user=user).values_list('followed_user', flat=True)
 
-    for ticket in tickets : 
-        ticket.user_has_reviewed = Review.objects.filter(ticket= ticket, user=request.user).exists()
+    tickets = Ticket.objects.filter(
+        Q(user__in=followed_users) | Q(user=user)
+    ).annotate(content_type=Value('TICKET', output_field=CharField()))
+
+    reviews = Review.objects.filter(
+        Q(user__in=followed_users) | Q(user=user) | Q(ticket__user=user)
+    ).annotate(content_type=Value('REVIEW', output_field=CharField()))
+
+    for ticket in tickets:
+        ticket.user_has_reviewed = Review.objects.filter(ticket=ticket, user=user).exists()
 
     posts = sorted(
         chain(tickets, reviews),
-        key= lambda post : post.time_created,
+        key=lambda post: post.time_created,
         reverse=True
     )
 
-    for post in posts : 
-        print(post)
+    return render(request, "feed/feed.html", {"posts": posts})
 
-    return render(request, "feed/feed.html" ,{"posts" : posts})
+
+
 
 @login_required
 def user_posts(request) : 

@@ -12,9 +12,6 @@ def create_or_edit_ticket(request, ticket_id = None) :
         ticket = get_object_or_404(Ticket, pk=ticket_id)
         if ticket.user != request.user : 
             return HttpResponseForbidden("Vous ne pouvez modifier que les tickets dont vous êtes le créateur : ")
-        else : 
-            ticket = ticket 
-            print("Ticket :::::>" , ticket)
     else : 
         ticket = None
 
@@ -24,8 +21,7 @@ def create_or_edit_ticket(request, ticket_id = None) :
             ticket = form.save(commit=False)
             ticket.user = request.user
             ticket.save()
-            #TODO : 
-            # return('STAY ON THE SAME PAGE OR REDIRECT ?')
+            
     else : 
         form = TicketForm(instance=ticket)
 
@@ -37,11 +33,11 @@ def create_or_edit_ticket(request, ticket_id = None) :
     return render (request, 'tickets/create_ticket.html', context)
 
 @login_required
-def create_ticket_and_rewiew(request) : 
-    if request.method == "POST" : 
-        ticket_form = TicketForm(request.POST, request.FILE)
+def create_ticket_and_review(request):
+    if request.method == "POST":
+        ticket_form = TicketForm(request.POST, request.FILES)
         review_form = ReviewForm(request.POST)
-        if ticket_form.is_valid() and review_form.is_valid() : 
+        if ticket_form.is_valid() and review_form.is_valid(): 
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
             ticket.save()
@@ -71,16 +67,11 @@ def delete_ticket(request, ticket_id) :
         ticket = get_object_or_404(Ticket, pk=ticket_id)
         if ticket.user != request.user : 
             return HttpResponseForbidden("Vous ne pouvez supprimer que les tickets dont vous êtes l'auteur")
-        else : 
-            ticket = ticket
     else : 
-        # TODO:
         return redirect('feed')
 
     if request.method == "POST" :
         ticket.delete()
-        #TODO : Uncomment line below once we have the homepage ready
-        # redirect('/home')
         return redirect('feed')
 
     context = {

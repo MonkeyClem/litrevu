@@ -21,15 +21,20 @@ def follow_user(request) :
             
             if username_to_follow == request.user.username : 
                 messages.error(request, "Je comprends, nous aussi on est fan de toi.. Mais tu ne peux pas te suivre toi même")
-            else: 
-                user_to_follow = get_object_or_404(User, username = username_to_follow)
-                follow, created = UserFollows.objects.get_or_create(
-                    user = request.user,
-                    followed_user = user_to_follow,
+            else:
+                # user_to_follow = get_object_or_404(User, username=username_to_follow)
+                try:
+                    user_to_follow = User.objects.get(username=username_to_follow)
+                except User.DoesNotExist:
+                    messages.error(request, "Cet utilisateur n'existe pas.")
+                    return redirect('follow_user')
+                _, created = UserFollows.objects.get_or_create(
+                    user=request.user,
+                    followed_user=user_to_follow,
                 )
-                if created : 
+                if created:
                     messages.success(request, f"Tu suis désormais {user_to_follow.username}")
-                else : 
+                else:
                     messages.info(request, f"Tu suis déjà {user_to_follow.username}")
 
             return redirect('follow_user')

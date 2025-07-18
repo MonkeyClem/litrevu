@@ -1,0 +1,57 @@
+# Environnements virtuels
+venv/
+.env/
+*.env
+
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Fichiers de base de données
+db.sqlite3
+*.sqlite3
+
+# Fichiers de log
+*.log
+
+# Fichiers de cache
+*.pot
+*.pyc
+
+# Dossiers temporaires
+*.swp
+*.bak
+*.tmp
+*.orig
+*.~ 
+
+# Fichiers/dossiers générés par l'IDE
+.vscode/
+.idea/
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+
+# Django media/uploads
+/media/
+media/
+uploads/
+
+# Fichiers de migration non suivis
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+.cache
+
+# Tests / debug
+.noseids
+.pytest_cache/
+
+# Mac/Unix
+.DS_Store
+.Trashes
